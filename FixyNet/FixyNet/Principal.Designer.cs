@@ -32,8 +32,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.archivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.conexionDBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configurarServicioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,18 +62,19 @@
             this.conexionDBToolStripMenuItem.Name = "conexionDBToolStripMenuItem";
             this.conexionDBToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.conexionDBToolStripMenuItem.Text = "Conexion DB";
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.aboutToolStripMenuItem.Text = "About";
+            this.conexionDBToolStripMenuItem.Click += new System.EventHandler(this.conexionDBToolStripMenuItem_Click);
             // 
             // configurarServicioToolStripMenuItem
             // 
             this.configurarServicioToolStripMenuItem.Name = "configurarServicioToolStripMenuItem";
             this.configurarServicioToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.configurarServicioToolStripMenuItem.Text = "Configurar servicio";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.aboutToolStripMenuItem.Text = "About";
             // 
             // Principal
             // 
