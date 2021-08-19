@@ -36,6 +36,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tbUsuario = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbDb = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.tbInstancia = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -106,6 +108,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.tbDb);
             this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.tbInstancia);
             this.groupBox2.Controls.Add(this.label4);
@@ -114,19 +118,37 @@
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Location = new System.Drawing.Point(12, 124);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(401, 100);
+            this.groupBox2.Size = new System.Drawing.Size(401, 132);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Conexion";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(160, 70);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(65, 13);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "DB Nombre:";
+            // 
+            // tbDb
+            // 
+            this.tbDb.Location = new System.Drawing.Point(232, 67);
+            this.tbDb.Name = "tbDb";
+            this.tbDb.Size = new System.Drawing.Size(154, 20);
+            this.tbDb.TabIndex = 8;
+            this.tbDb.Text = "fixynet";
+            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(271, 71);
+            this.button1.Location = new System.Drawing.Point(124, 103);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(124, 23);
             this.button1.TabIndex = 7;
             this.button1.Text = "Instalar Base";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // tbInstancia
             // 
@@ -147,7 +169,7 @@
             // 
             // btnTestConexion
             // 
-            this.btnTestConexion.Location = new System.Drawing.Point(153, 71);
+            this.btnTestConexion.Location = new System.Drawing.Point(6, 103);
             this.btnTestConexion.Name = "btnTestConexion";
             this.btnTestConexion.Size = new System.Drawing.Size(112, 23);
             this.btnTestConexion.TabIndex = 2;
@@ -175,11 +197,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(424, 268);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ConfDB";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Configuracion Base de Datos";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ConfDB_FormClosed);
             this.Load += new System.EventHandler(this.ConfDB_Load);
@@ -206,5 +230,7 @@
         private System.Windows.Forms.TextBox tbInstancia;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tbDb;
     }
 }

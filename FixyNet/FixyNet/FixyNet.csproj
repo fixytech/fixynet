@@ -12,6 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,7 +25,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -54,6 +54,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -65,7 +66,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConexionDb.cs" />
+    <Compile Include="Clases\Clientes.cs" />
+    <Compile Include="Clases\ConexionDb.cs" />
+    <Compile Include="Clases\Discovery.cs" />
+    <Compile Include="Clases\Listas\ListaIPRespuesta.cs" />
+    <Compile Include="Clases\ProgressBarEvent.cs" />
+    <Compile Include="ClienteAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClienteAdd.Designer.cs">
+      <DependentUpon>ClienteAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Descubrir.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Descubrir.Designer.cs">
+      <DependentUpon>Descubrir.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dispositivos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dispositivos.Designer.cs">
+      <DependentUpon>Dispositivos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Clases\HerramientasRed.cs" />
     <Compile Include="Principal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,8 +104,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ClienteAdd.resx">
+      <DependentUpon>ClienteAdd.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConfDB.resx">
       <DependentUpon>ConfDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Descubrir.resx">
+      <DependentUpon>Descubrir.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dispositivos.resx">
+      <DependentUpon>Dispositivos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Principal.resx">
       <DependentUpon>Principal.cs</DependentUpon>

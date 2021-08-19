@@ -16,12 +16,12 @@ namespace FixyNet
         static string stringConexion = ConfigurationManager.AppSettings["stringConexion"];
 
         // Testear conexion de windows.
-        static public void testConexionWindows(String serverInstancia)
+        static public void testConexionWindows(String serverInstancia, String nombreDb)
         {
             SqlConnection conexion = new SqlConnection();
 
                 // Cadena de conexion
-                conexion.ConnectionString = "server ="+serverInstancia+"; integrated security = true";
+                conexion.ConnectionString = "server ="+serverInstancia+ "; Database="+ nombreDb +"; integrated security = true";
        
 
             try
@@ -30,7 +30,7 @@ namespace FixyNet
                 conexion.Open();
                 MessageBox.Show("Conexion Exitosa");
                 conexion.Close();
-                guardarString("server =" + serverInstancia + "; integrated security = true");
+                guardarString("server =" + serverInstancia + "; Database=" + nombreDb + "; integrated security = true");
 
             }
             catch (Exception ex)
@@ -41,12 +41,12 @@ namespace FixyNet
         }
 
         // Testear conexion Basica
-        static public void testConexionBasic(String serverInstancia, String usuario, String pass)
+        static public void testConexionBasic(String serverInstancia, String nombreDb, String usuario, String pass)
         {
             SqlConnection conexion = new SqlConnection();
 
             // Cadena de conexion
-            conexion.ConnectionString = "server="+ serverInstancia +"; User ID="+ usuario +";Password="+ pass +";";
+            conexion.ConnectionString = "server="+ serverInstancia + "; Database=" + nombreDb + "; User ID=" + usuario +";Password="+ pass +";";
 
 
             try
@@ -55,7 +55,7 @@ namespace FixyNet
                 conexion.Open();
                 MessageBox.Show("Conexion Exitosa");
                 conexion.Close();
-                guardarString("server=" + serverInstancia + "; User ID=" + usuario + ";Password=" + pass + ";");
+                guardarString("server=" + serverInstancia + "; Database=" + nombreDb + "; User ID=" + usuario + ";Password=" + pass + ";");
 
             }
             catch (Exception ex)
@@ -72,6 +72,19 @@ namespace FixyNet
             config.AppSettings.Settings["stringConexion"].Value = cadenaString;
             config.Save(ConfigurationSaveMode.Modified);
           
+        }
+
+       
+        // Establecer conexion
+        public static SqlConnection Conectar()
+        {
+            SqlConnection conexion = new SqlConnection();
+
+            // Cadena de conexion
+            conexion.ConnectionString = stringConexion.ToString();
+
+              
+                return conexion;
         }
     }
 }

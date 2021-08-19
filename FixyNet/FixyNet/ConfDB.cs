@@ -33,7 +33,7 @@ namespace FixyNet
             if(cbWindows.Checked == true && tbServer.Text.Length > 0)
             {
 
-                ConexionDb.testConexionWindows(tbServer.Text + "\\" + tbInstancia.Text);
+                ConexionDb.testConexionWindows(tbServer.Text + "\\" + tbInstancia.Text, tbDb.Text);
             }
             else
             {
@@ -48,7 +48,7 @@ namespace FixyNet
                 }
                 else
                 {
-                    ConexionDb.testConexionBasic(tbServer.Text + "\\" + tbInstancia.Text, tbUsuario.Text, tbPassword.Text);
+                    ConexionDb.testConexionBasic(tbServer.Text + "\\" + tbInstancia.Text, tbDb.Text, tbUsuario.Text, tbPassword.Text);
                 }
             }
           
@@ -75,6 +75,11 @@ namespace FixyNet
                 tbPassword.Enabled = true;
             }
            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
