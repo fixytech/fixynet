@@ -3,53 +3,106 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FixyNet.Clases;
 
 namespace FixyNet.Clases
 {
-    class Discovery 
+    class Discovery : Pinguear
     {
 
-        public event EventHandler<ProgressBarEvent> ProgressEvent;
+        // declaro LISTA
+        public List<ListaIPRespuesta> respuesta = new List<ListaIPRespuesta>();
+        private List<ListaIPRespuesta> listaConHost = new List<ListaIPRespuesta>();
+        private Loading loading = new Loading();
+        private int l = 0;
 
-
-        public virtual void OnRaiseProgressEvent(ProgressBarEvent e)
+        public async Task Regular()
         {
-            // C# 6 and above:
-            // Raise event if event handler is set (i.e. not null)
-            ProgressEvent?.Invoke(this, e);
-            // end C# >=6 code
 
-            // C# 5 and earlier:
-            EventHandler<ProgressBarEvent> handler = ProgressEvent;
+            loading.Show();
+            loading.setTitle("Buscando datos del dispositivo....");
 
-            if (handler != null)
+            DescubrirHostyMac host;
+            var tasks = new List<Task>();
+            host = new DescubrirHostyMac();
+
+            foreach (ListaIPRespuesta lista in respuesta)
             {
-                //this is what actually raises the event.
-                handler(this, e);
+
+                Task task = host.ResolveAsync(lista.ip);
+
+                tasks.Add(task);
+
             }
-            // end C# <=5 code
+            int max = tasks.Count;
+
+            loading.setProgress(max, 0);
+
+            while (true)
+            {
+                foreach (Task item in tasks)
+                {
+
+                    if (item.Status == TaskStatus.RanToCompletion)
+                    {
+                        l += 1;
+                    }
+
+                    if (l == max)
+                    {
+                        break;
+                    }
+                }
+                loading.statusProgress(l);
+                if (l == max)
+                {
+                    break;
+                }
+                await Task.Delay(10);
+
+            }
+
+            await Task.WhenAll(tasks).ContinueWith(t =>
+            {
+
+                respuesta = host.listaConHost;
+
+            });
+
+            loading.Close();
+
         }
-         public List<ListaIPRespuesta> buscarDispositivos(String ip) // Formato admitido Ej: 192.168.0.1-254, 10.10.0.15-52
+        static public string[] dividirIp(string ip)
+        {
+            string[] respuesta = null;
+
+            respuesta = ip.Split('.');
+
+            return respuesta;
+        }
+        public async Task BuscarDispositivos(String ip) // Formato admitido Ej: 192.168.0.1-254, 10.10.0.15-52
         {
 
-            List<ListaIPRespuesta> resultado;
-            resultado = new List<ListaIPRespuesta>();
+            // INSTANCIO CLASE PINGUEAR
+            Pinguear pingAsync = new Pinguear();
+
+            string tresOctetos;
 
             string[] red;
 
-            string[] ipDividida = null;
 
-            int id =0;
 
             // separador de redes
-            char delimitador = ','; 
+            char delimitador = ',';
 
             // Redes detectadas
             string[] redes = ip.Split(delimitador);
 
+
+            string[] ipDividida;
             // Si hay solo una
             if (redes.Length == 1)
             {
@@ -64,75 +117,110 @@ namespace FixyNet.Clases
 
                 if (red.Length == 1)
                 {
-                    // realizo ping a la ip
-                    OnRaiseProgressEvent(new ProgressBarEvent(0, 1, "Buscando... " + red[0]));
 
-                    resultado.Add(new ListaIPRespuesta { ip = red[0], estado = HerramientasRed.pinguear(red[0]).Status.ToString() });
+                    // DIVIDO OCTETOS DE LA IP
+                    ipDividida = dividirIp(red[0]);
+                    // ARMO LOS TRES PRIMEROS OCTETOS DE LA RED
+                    tresOctetos = ipDividida[0] + "." + ipDividida[1] + "." + ipDividida[2] + ".";
 
-                    OnRaiseProgressEvent(new ProgressBarEvent(1,1,"Terminado "+red[0]));
+                    // LE ASIGNO A LA CLASE LA PROPIEDAD
+                    pingAsync.BaseIP = tresOctetos;
+                    pingAsync.StartIP = Int32.Parse(ipDividida[3]);
+                    pingAsync.StopIP = Int32.Parse(ipDividida[3]);
+
+                    await pingAsync.RunPingSweep_Async();
+
+
+                    respuesta = pingAsync.resultado;
+
+
                 }
                 else
                 {
-                    ipDividida = HerramientasRed.dividirIp(red[0]);
+                    ipDividida = dividirIp(red[0]);
 
-                    
 
-                    for (int i = Int32.Parse(ipDividida[3]); i <= Int32.Parse(red[1]); i++)
-                    {
-                        string ipPing = ipDividida[0] + "." + ipDividida[1] + "." + ipDividida[2] + "." + i;
+                    tresOctetos = ipDividida[0] + "." + ipDividida[1] + "." + ipDividida[2] + ".";
 
-                        resultado.Add(new ListaIPRespuesta { ip = ipPing, estado = HerramientasRed.pinguear(ipPing).Status.ToString() });
+                    // LE ASIGNO A LA CLASE LA PROPIEDAD
+                    pingAsync.BaseIP = tresOctetos;
+                    pingAsync.StartIP = Int32.Parse(ipDividida[3]);
+                    pingAsync.StopIP = Int32.Parse(red[1]);
+                    await pingAsync.RunPingSweep_Async();
 
-                        OnRaiseProgressEvent(new ProgressBarEvent(i, Int32.Parse(red[1]), "Buscando... "+ ipPing));
 
-                        id++;
-                    }
-                    OnRaiseProgressEvent(new ProgressBarEvent(Int32.Parse(red[1]), Int32.Parse(red[1]), "Terminado"));
+                    respuesta = pingAsync.resultado;
+
+
                 }
+                respuesta = pingAsync.resultado;
             }
             else // si hay mas de una red
             {
-                OnRaiseProgressEvent(new ProgressBarEvent(0, redes.Length, "Buscando"));
 
-                for (int i=0; i < redes.Length; i++)
+                for (int i = 0; i <= redes.Length; i++)
                 {
 
                     // busco el inicio y fin a buscar ejemplo 10.10.0.1-254
                     delimitador = '-';
 
+                    //192.168.0.1-254,192.168.1.1-254
                     // defino red 
                     red = redes[i].Split(delimitador);
 
-                    if (red.Length == 1)
+                    try
                     {
-
-                        OnRaiseProgressEvent(new ProgressBarEvent(i, redes.Length, "Buscando... " + redes[i]));
-                        // realizo ping a la ip
-                        resultado.Add(new ListaIPRespuesta { ip = redes[i], estado = HerramientasRed.pinguear(redes[i]).Status.ToString() });
-                        
-                    }
-                    else
-                    {
-                        ipDividida = HerramientasRed.dividirIp(red[0]);
-
-
-
-                        for (int ix = Int32.Parse(ipDividida[3]); ix <= Int32.Parse(red[1]); ix++)
+                        if (red.Length == 1)
                         {
+                            // DIVIDO OCTETOS DE LA IP
+                            ipDividida = dividirIp(red[0]);
+                            // ARMO LOS TRES PRIMEROS OCTETOS DE LA RED
+                            tresOctetos = ipDividida[0] + "." + ipDividida[1] + "." + ipDividida[2] + ".";
 
-                            string ipPing = ipDividida[0] + "." + ipDividida[1] + "." + ipDividida[2] + "." + ix;
+                            // LE ASIGNO A LA CLASE LA PROPIEDAD
+                            pingAsync.BaseIP = tresOctetos;
+                            pingAsync.StartIP = Int32.Parse(ipDividida[3]);
+                            pingAsync.StopIP = Int32.Parse(ipDividida[3]);
+                            await pingAsync.RunPingSweep_Async();
 
-                            OnRaiseProgressEvent(new ProgressBarEvent(ix, Int32.Parse(red[1]), "Buscando... " + ipPing));
+                            if (i == redes.Length - 1)
+                            {
+                                respuesta = pingAsync.resultado;
+                                break;
+                            }
 
-                            resultado.Add(new ListaIPRespuesta { ip = ipPing, estado = HerramientasRed.pinguear(ipPing).Status.ToString() });
+                        }
+                        else
+                        {
+                            ipDividida = dividirIp(red[0]);
 
-                            id++;
+                            tresOctetos = ipDividida[0] + "." + ipDividida[1] + "." + ipDividida[2] + ".";
+
+                            // LE ASIGNO A LA CLASE LA PROPIEDAD
+                            pingAsync.BaseIP = tresOctetos;
+                            pingAsync.StartIP = Int32.Parse(ipDividida[3]);
+                            pingAsync.StopIP = Int32.Parse(red[1]);
+                            await pingAsync.RunPingSweep_Async();
+
+                            if (i == redes.Length - 1)
+                            {
+                                respuesta = pingAsync.resultado;
+                                break;
+                            }
+
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
+
 
                 }
+
             }
-            return resultado;
+
         }
+
     }
 }

@@ -10,38 +10,43 @@ namespace FixyNet
 {
     class Clientes
     {
-        
-       
-        static public void agregarCliente(String nombre, String direccion, String contacto, String email) {
+
+
+        static public void agregarCliente(String nombre, String direccion, String contacto, String email)
+        {
 
             if (nombre.Length == 0)
             {
                 MessageBox.Show("Debe ingresar un nombre de cliente", "CLIENTE", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
+            SqlConnection cn = new SqlConnection(ConexionDb.cadenaConexion());
             String miGuid = Guid.NewGuid().ToString();
 
             String queryInsert = "INSERT INTO clientes " +
-                            "([uuid_cliente],[nombre],[direccion],[persona_contacto],[email]) VALUES"+
-           "('"+ miGuid +"'"+
-           ", '"+ nombre +"'"+
-           ", '"+ direccion +"'"+
-           ", '"+ contacto +"'"+
-           ", '"+ email +"')";
+                            "([uuid_cliente],[nombre],[direccion],[persona_contacto],[email]) VALUES" +
+           "('" + miGuid + "'" +
+           ", '" + nombre + "'" +
+           ", '" + direccion + "'" +
+           ", '" + contacto + "'" +
+           ", '" + email + "')";
 
             try
             {
-                SqlCommand comando = new SqlCommand(queryInsert, ConexionDb.Conectar() );
+                cn.Open();
+                SqlCommand comando = new SqlCommand(queryInsert, cn);
+
                 comando.ExecuteNonQuery();
 
                 MessageBox.Show("Cliente agregado!", "CLIENTE", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show("Error al agregar registro. " + ex, "CLIENTE", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            cn.Close();
         }
-}
+    }
 
 }

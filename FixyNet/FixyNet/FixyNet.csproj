@@ -69,7 +69,12 @@
     <Compile Include="Clases\Clientes.cs" />
     <Compile Include="Clases\ConexionDb.cs" />
     <Compile Include="Clases\Discovery.cs" />
+    <Compile Include="Clases\DispositivosClass.cs" />
+    <Compile Include="Clases\IpMac.cs" />
+    <Compile Include="Clases\Listas\ListaDispositivos.cs" />
     <Compile Include="Clases\Listas\ListaIPRespuesta.cs" />
+    <Compile Include="Clases\DescubrirHostyMac.cs" />
+    <Compile Include="Clases\Pinguear.cs" />
     <Compile Include="Clases\ProgressBarEvent.cs" />
     <Compile Include="ClienteAdd.cs">
       <SubType>Form</SubType>
@@ -89,7 +94,23 @@
     <Compile Include="Dispositivos.Designer.cs">
       <DependentUpon>Dispositivos.cs</DependentUpon>
     </Compile>
-    <Compile Include="Clases\HerramientasRed.cs" />
+    <Compile Include="fixynetDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>fixynetDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="frmAddDispMan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAddDispMan.Designer.cs">
+      <DependentUpon>frmAddDispMan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Loading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Loading.Designer.cs">
+      <DependentUpon>Loading.cs</DependentUpon>
+    </Compile>
     <Compile Include="Principal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,6 +137,12 @@
     <EmbeddedResource Include="Dispositivos.resx">
       <DependentUpon>Dispositivos.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmAddDispMan.resx">
+      <DependentUpon>frmAddDispMan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Loading.resx">
+      <DependentUpon>Loading.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Principal.resx">
       <DependentUpon>Principal.cs</DependentUpon>
     </EmbeddedResource>
@@ -127,7 +154,19 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="fixynetDataSet.xsc">
+      <DependentUpon>fixynetDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="fixynetDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>fixynetDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="fixynetDataSet.xss">
+      <DependentUpon>fixynetDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -143,6 +182,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logoFixy.ico" />
+    <None Include="Resources\Good_or_Tick_36889.png" />
+    <None Include="Resources\Error_36910.png" />
+    <None Include="Resources\kisspng-desktop-wallpaper-product-design-font-computer-app-insights-fail-button-widget-soundboard-apptop-5c593428d8a597.0433492215493499288874.png" />
+    <None Include="Resources\kisspng-computer-icons-check-mark-presentation-symbol-check-list-5ac41358197303.9196128115227994481043.png" />
+    <None Include="Resources\png-transparent-web-development-computer-icons-world-wide-web.png" />
+    <None Include="Resources\botón-rojo-metálico-redondo-off-line-99092717 %281%29.ico" />
+    <None Include="Resources\Icon1.ico" />
+    <None Include="Resources\botón-rojo-metálico-redondo-off-line-99092717.ico" />
+    <None Include="Resources\offline.ico" />
+    <None Include="Resources\Image1.jpg" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

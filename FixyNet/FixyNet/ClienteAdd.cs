@@ -36,12 +36,15 @@ namespace FixyNet
         {
             try
             {
-Clientes.agregarCliente(tbCliente.Text, tbDireccion.Text, tbPersona.Text, tbEmail.Text);
-            }catch(Exception ex)
+                Clientes.agregarCliente(tbCliente.Text, tbDireccion.Text, tbPersona.Text, tbEmail.Text);
+
+
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
-            
+
         }
     }
 }

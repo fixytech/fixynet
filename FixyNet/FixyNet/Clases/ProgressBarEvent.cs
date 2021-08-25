@@ -17,9 +17,7 @@ namespace FixyNet.Clases
         public ProgressBarEvent(int progress, int total, string mensaje)
         {
             Progress = progress;
-
             Total = total;
-
             Mensaje = mensaje;
         }
 

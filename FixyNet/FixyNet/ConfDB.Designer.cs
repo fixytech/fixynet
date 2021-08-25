@@ -80,6 +80,7 @@
             this.tbPassword.PasswordChar = '*';
             this.tbPassword.Size = new System.Drawing.Size(154, 20);
             this.tbPassword.TabIndex = 3;
+            this.tbPassword.Text = "Fixytech";
             // 
             // label2
             // 
@@ -105,6 +106,7 @@
             this.tbUsuario.Name = "tbUsuario";
             this.tbUsuario.Size = new System.Drawing.Size(100, 20);
             this.tbUsuario.TabIndex = 0;
+            this.tbUsuario.Text = "sa";
             // 
             // groupBox2
             // 

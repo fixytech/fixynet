@@ -6,12 +6,16 @@ using System.Threading.Tasks;
 
 namespace FixyNet.Clases
 {
-    class ListaIPRespuesta 
+    class ListaIPRespuesta
     {
         public string ip { get; set; }
 
         //resto propiedades
 
         public string estado { get; set; }
+
+        public string mac { get; set; }
+
+        public string host { get; set; }
     }
 }

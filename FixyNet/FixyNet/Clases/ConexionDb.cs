@@ -11,18 +11,18 @@ namespace FixyNet
 {
     class ConexionDb
     {
-       
+
         // Cadena de conexion.
-        static string stringConexion = ConfigurationManager.AppSettings["stringConexion"];
+        //  public static ConnectionStringSettings stringConexion = ConfigurationManager.ConnectionStrings["connectionString"].ToString();
 
         // Testear conexion de windows.
         static public void testConexionWindows(String serverInstancia, String nombreDb)
         {
             SqlConnection conexion = new SqlConnection();
 
-                // Cadena de conexion
-                conexion.ConnectionString = "server ="+serverInstancia+ "; Database="+ nombreDb +"; integrated security = true";
-       
+            // Cadena de conexion
+            conexion.ConnectionString = "server =" + serverInstancia + "; Database=" + nombreDb + "; integrated security = true";
+
 
             try
             {
@@ -46,7 +46,7 @@ namespace FixyNet
             SqlConnection conexion = new SqlConnection();
 
             // Cadena de conexion
-            conexion.ConnectionString = "server="+ serverInstancia + "; Database=" + nombreDb + "; User ID=" + usuario +";Password="+ pass +";";
+            conexion.ConnectionString = "server=" + serverInstancia + "; Database=" + nombreDb + "; User ID=" + usuario + ";Password=" + pass + ";";
 
 
             try
@@ -69,22 +69,20 @@ namespace FixyNet
         static public void guardarString(string cadenaString)
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.AppSettings.Settings["stringConexion"].Value = cadenaString;
+            config.ConnectionStrings.ConnectionStrings["FixyNet.Properties.Settings.fixynetConnectionString"].ConnectionString = cadenaString;
+
             config.Save(ConfigurationSaveMode.Modified);
-          
+
         }
 
-       
+
         // Establecer conexion
-        public static SqlConnection Conectar()
+        public static string cadenaConexion()
         {
-            SqlConnection conexion = new SqlConnection();
-
-            // Cadena de conexion
-            conexion.ConnectionString = stringConexion.ToString();
-
-              
-                return conexion;
+            Configuration appconfig =
+             ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            string connStringSettings = appconfig.ConnectionStrings.ConnectionStrings["FixyNet.Properties.Settings.fixynetConnectionString"].ConnectionString;
+            return connStringSettings;
         }
     }
 }

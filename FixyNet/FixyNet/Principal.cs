@@ -13,13 +13,13 @@ namespace FixyNet
 {
     public partial class Principal : Form
     {
-       
-        
+
+
 
         public Principal()
         {
             InitializeComponent();
-       
+
         }
 
         private void conexionDBToolStripMenuItem_Click(object sender, EventArgs e)
@@ -36,45 +36,35 @@ namespace FixyNet
         private void Principal_Load(object sender, EventArgs e)
         {
             toolStripStatusLabel1.Text = "Conectando a base de datos...";
-            SqlConnection cn = ConexionDb.Conectar();
+            SqlConnection cn = new SqlConnection(ConexionDb.cadenaConexion());
 
             try
             {
                 // Conecto con base de datos
                 cn.Open();
-                toolStripStatusLabel1.Text = "Conectado";
+                toolStripStatusLabel1.Text = "Conexion Exitosa";
                 toolStripStatusLabel1.BackColor = Color.Green;
 
-                string sql = "select * from clientes";
-
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(sql, cn);
-                DataTable dt = new DataTable();
-
-                dataAdapter.Fill(dt);
-
-                
-                dgClientes.DataSource = dt;
-                
 
                 cn.Close();
 
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 cn.Close();
-                groupBox1.Enabled = false;
+
                 // Informo error
                 MessageBox.Show("No se pudo conectar a la base de datos. Revise la configuracion. " + ex);
                 toolStripStatusLabel1.Text = "Error de conexion...";
                 toolStripStatusLabel1.BackColor = Color.Red;
-               
+
             }
         }
 
         private void Principal_FormClosing(object sender, FormClosingEventArgs e)
         {
-          
+
         }
 
         private void agregarToolStripMenuItem_Click(object sender, EventArgs e)
@@ -100,6 +90,19 @@ namespace FixyNet
             Form herramientaDescubrir = new Descubrir();
 
             herramientaDescubrir.Show();
+        }
+
+        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Form dispositivosLista = new Dispositivos();
+
+            dispositivosLista.Show();
+
         }
     }
 }
