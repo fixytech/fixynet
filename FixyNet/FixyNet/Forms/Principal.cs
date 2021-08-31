@@ -1,4 +1,7 @@
-﻿using System;
+﻿using FixyNet.Clases;
+using FixyNet.Clases.Listas;
+using FixyNet.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -60,6 +63,10 @@ namespace FixyNet
                 toolStripStatusLabel1.BackColor = Color.Red;
 
             }
+
+
+
+
         }
 
         private void Principal_FormClosing(object sender, FormClosingEventArgs e)
@@ -102,6 +109,16 @@ namespace FixyNet
             Form dispositivosLista = new Dispositivos();
 
             dispositivosLista.Show();
+
+        }
+
+        private void monitorToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Form monitor = new FrmMonitor();
+
+            monitor.Show();
+
+
 
         }
     }

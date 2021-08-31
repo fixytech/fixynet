@@ -72,14 +72,14 @@
             // descubrirToolStripMenuItem
             // 
             this.descubrirToolStripMenuItem.Name = "descubrirToolStripMenuItem";
-            this.descubrirToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.descubrirToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.descubrirToolStripMenuItem.Text = "Agregar";
             this.descubrirToolStripMenuItem.Click += new System.EventHandler(this.descubrirToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(116, 22);
             this.toolStripMenuItem1.Text = "Lista";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
@@ -117,6 +117,7 @@
             this.monitorToolStripMenuItem1.Name = "monitorToolStripMenuItem1";
             this.monitorToolStripMenuItem1.Size = new System.Drawing.Size(62, 20);
             this.monitorToolStripMenuItem1.Text = "Monitor";
+            this.monitorToolStripMenuItem1.Click += new System.EventHandler(this.monitorToolStripMenuItem1_Click);
             // 
             // statusStrip1
             // 

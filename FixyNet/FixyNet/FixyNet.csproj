@@ -54,6 +54,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -70,28 +71,36 @@
     <Compile Include="Clases\ConexionDb.cs" />
     <Compile Include="Clases\Discovery.cs" />
     <Compile Include="Clases\DispositivosClass.cs" />
+    <Compile Include="Clases\EventosClass.cs" />
+    <Compile Include="Clases\Grafico.cs" />
     <Compile Include="Clases\IpMac.cs" />
     <Compile Include="Clases\Listas\ListaDispositivos.cs" />
+    <Compile Include="Clases\Listas\ListaGrafico.cs" />
+    <Compile Include="Clases\Listas\ListaIpMonAct.cs" />
     <Compile Include="Clases\Listas\ListaIPRespuesta.cs" />
     <Compile Include="Clases\DescubrirHostyMac.cs" />
+    <Compile Include="Clases\MonitorClass.cs" />
     <Compile Include="Clases\Pinguear.cs" />
     <Compile Include="Clases\ProgressBarEvent.cs" />
-    <Compile Include="ClienteAdd.cs">
+    <Compile Include="fixynetDataSet.cs">
+      <DependentUpon>fixynetDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ClienteAdd.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ClienteAdd.Designer.cs">
+    <Compile Include="Forms\ClienteAdd.Designer.cs">
       <DependentUpon>ClienteAdd.cs</DependentUpon>
     </Compile>
-    <Compile Include="Descubrir.cs">
+    <Compile Include="Forms\Descubrir.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Descubrir.Designer.cs">
+    <Compile Include="Forms\Descubrir.Designer.cs">
       <DependentUpon>Descubrir.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dispositivos.cs">
+    <Compile Include="Forms\Dispositivos.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dispositivos.Designer.cs">
+    <Compile Include="Forms\Dispositivos.Designer.cs">
       <DependentUpon>Dispositivos.cs</DependentUpon>
     </Compile>
     <Compile Include="fixynetDataSet.Designer.cs">
@@ -99,51 +108,69 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>fixynetDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="frmAddDispMan.cs">
+    <Compile Include="Forms\frmAddDispMan.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmAddDispMan.Designer.cs">
+    <Compile Include="Forms\frmAddDispMan.Designer.cs">
       <DependentUpon>frmAddDispMan.cs</DependentUpon>
     </Compile>
-    <Compile Include="Loading.cs">
+    <Compile Include="Forms\frmGrafico.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Loading.Designer.cs">
+    <Compile Include="Forms\frmGrafico.Designer.cs">
+      <DependentUpon>frmGrafico.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Loading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Loading.Designer.cs">
       <DependentUpon>Loading.cs</DependentUpon>
     </Compile>
-    <Compile Include="Principal.cs">
+    <Compile Include="Forms\frmMonitor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Principal.Designer.cs">
+    <Compile Include="Forms\frmMonitor.Designer.cs">
+      <DependentUpon>frmMonitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Principal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Principal.Designer.cs">
       <DependentUpon>Principal.cs</DependentUpon>
     </Compile>
-    <Compile Include="ConfDB.cs">
+    <Compile Include="Forms\ConfDB.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConfDB.Designer.cs">
+    <Compile Include="Forms\ConfDB.Designer.cs">
       <DependentUpon>ConfDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ClienteAdd.resx">
+    <EmbeddedResource Include="Forms\ClienteAdd.resx">
       <DependentUpon>ClienteAdd.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ConfDB.resx">
+    <EmbeddedResource Include="Forms\ConfDB.resx">
       <DependentUpon>ConfDB.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Descubrir.resx">
+    <EmbeddedResource Include="Forms\Descubrir.resx">
       <DependentUpon>Descubrir.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dispositivos.resx">
+    <EmbeddedResource Include="Forms\Dispositivos.resx">
       <DependentUpon>Dispositivos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmAddDispMan.resx">
+    <EmbeddedResource Include="Forms\frmAddDispMan.resx">
       <DependentUpon>frmAddDispMan.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Loading.resx">
+    <EmbeddedResource Include="Forms\frmGrafico.resx">
+      <DependentUpon>frmGrafico.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Loading.resx">
       <DependentUpon>Loading.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Principal.resx">
+    <EmbeddedResource Include="Forms\frmMonitor.resx">
+      <DependentUpon>frmMonitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Principal.resx">
       <DependentUpon>Principal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -204,6 +231,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

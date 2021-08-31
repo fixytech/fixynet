@@ -14,11 +14,11 @@ namespace FixyNet.Clases
         public string BaseIP;
         public int StartIP;
         public int StopIP;
-        private string ip;
+        public string ip;
         public int progreso = 0;
+        public long tiempoResp;
 
-
-        public int timeout = 2000;
+        public int timeout = 1000;
         public int nFound = 0;
 
         static object lockObj = new object();
@@ -85,6 +85,30 @@ namespace FixyNet.Clases
 
         }
 
+        public async Task<Boolean> PingAsync(System.Net.NetworkInformation.Ping ping)
+        {
+
+
+            var reply = await ping.SendPingAsync(ip, timeout);
+
+            tiempoResp = reply.RoundtripTime;
+
+
+            if (reply.Status == System.Net.NetworkInformation.IPStatus.Success)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
+
+
+
+
+        }
 
     }
 }

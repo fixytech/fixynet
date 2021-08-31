@@ -1,6 +1,8 @@
 ﻿using FixyNet.Clases.Listas;
+using FixyNet.fixynetDataSetTableAdapters;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
@@ -15,12 +17,8 @@ namespace FixyNet.Clases
         public IPAddress ip;
         public IPAddress ipFin;
         public List<ListaDispositivos> listaDispositivos = new List<ListaDispositivos>();
-        public string mac;
-        public string marca;
-        public string modelo;
-        public string hostname;
-        public string descripcion;
-        public string subnet;
+        public List<ListaIpMonAct> listaReturn = new List<ListaIpMonAct>();
+
 
         public async Task<string> AgregarDispositivos()
         {
@@ -136,6 +134,60 @@ namespace FixyNet.Clases
 
 
 
+        }
+
+        public async Task listaMonActivo()
+        {
+
+
+            try
+            {
+
+
+                SqlConnection cn = new SqlConnection(ConexionDb.cadenaConexion());
+                cn.Open();
+
+
+                Task consultar = Task.Run(() =>
+                {
+                    String queryInsert = "SELECT uuid_dispositivo, ip, monitor FROM dispositivos WHERE monitor = 1";
+
+                    try
+                    {
+                        SqlCommand comando = new SqlCommand(queryInsert, cn);
+
+                        SqlDataReader reader = comando.ExecuteReader();
+
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                listaReturn.Add(new ListaIpMonAct { uuid_dispositivo = reader.GetString(0), ip = reader.GetString(1) });
+
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Sin dispositivos para monitorear");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                });
+                await consultar;
+
+                cn.Close();
+
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

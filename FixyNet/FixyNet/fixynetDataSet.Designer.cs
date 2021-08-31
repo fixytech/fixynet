@@ -920,13 +920,10 @@ namespace FixyNet {
                 base.Columns.Add(this.columnhostname);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnuuid_dispositivo}, true));
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint2", new global::System.Data.DataColumn[] {
-                                this.columnip}, false));
                 this.columnuuid_dispositivo.AllowDBNull = false;
                 this.columnuuid_dispositivo.Unique = true;
                 this.columnuuid_dispositivo.MaxLength = 50;
                 this.columnip.AllowDBNull = false;
-                this.columnip.Unique = true;
                 this.columnip.MaxLength = 20;
                 this.columnsubnet.MaxLength = 150;
                 this.columnmac.MaxLength = 150;
@@ -1079,6 +1076,8 @@ namespace FixyNet {
             
             private global::System.Data.DataColumn columnobservacion;
             
+            private global::System.Data.DataColumn columntiempo_respuesta;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public eventosDataTable() {
@@ -1162,6 +1161,14 @@ namespace FixyNet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn tiempo_respuestaColumn {
+                get {
+                    return this.columntiempo_respuesta;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1197,7 +1204,7 @@ namespace FixyNet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public eventosRow AddeventosRow(string uuid_evento, dispositivosRow parentdispositivosRowBydispositivos_eventos, System.DateTime fecha, byte[] hora, string estado, string observacion) {
+            public eventosRow AddeventosRow(string uuid_evento, dispositivosRow parentdispositivosRowBydispositivos_eventos, string fecha, string hora, string estado, string observacion, int tiempo_respuesta) {
                 eventosRow roweventosRow = ((eventosRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         uuid_evento,
@@ -1205,7 +1212,8 @@ namespace FixyNet {
                         fecha,
                         hora,
                         estado,
-                        observacion};
+                        observacion,
+                        tiempo_respuesta};
                 if ((parentdispositivosRowBydispositivos_eventos != null)) {
                     columnValuesArray[1] = parentdispositivosRowBydispositivos_eventos[0];
                 }
@@ -1244,6 +1252,7 @@ namespace FixyNet {
                 this.columnhora = base.Columns["hora"];
                 this.columnestado = base.Columns["estado"];
                 this.columnobservacion = base.Columns["observacion"];
+                this.columntiempo_respuesta = base.Columns["tiempo_respuesta"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1253,23 +1262,26 @@ namespace FixyNet {
                 base.Columns.Add(this.columnuuid_evento);
                 this.columnuuid_dispositivo = new global::System.Data.DataColumn("uuid_dispositivo", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnuuid_dispositivo);
-                this.columnfecha = new global::System.Data.DataColumn("fecha", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                this.columnfecha = new global::System.Data.DataColumn("fecha", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnfecha);
-                this.columnhora = new global::System.Data.DataColumn("hora", typeof(byte[]), null, global::System.Data.MappingType.Element);
+                this.columnhora = new global::System.Data.DataColumn("hora", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnhora);
                 this.columnestado = new global::System.Data.DataColumn("estado", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnestado);
                 this.columnobservacion = new global::System.Data.DataColumn("observacion", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnobservacion);
+                this.columntiempo_respuesta = new global::System.Data.DataColumn("tiempo_respuesta", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntiempo_respuesta);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnuuid_evento}, true));
                 this.columnuuid_evento.AllowDBNull = false;
                 this.columnuuid_evento.Unique = true;
-                this.columnuuid_evento.MaxLength = 10;
+                this.columnuuid_evento.MaxLength = 50;
                 this.columnuuid_dispositivo.AllowDBNull = false;
-                this.columnuuid_dispositivo.MaxLength = 10;
-                this.columnfecha.AllowDBNull = false;
+                this.columnuuid_dispositivo.MaxLength = 50;
+                this.columnfecha.MaxLength = 50;
                 this.columnhora.ReadOnly = true;
+                this.columnhora.MaxLength = 50;
                 this.columnestado.AllowDBNull = false;
                 this.columnestado.MaxLength = 50;
                 this.columnobservacion.MaxLength = 150;
@@ -1577,11 +1589,11 @@ namespace FixyNet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public string subnet {
                 get {
-                    try {
-                        return ((string)(this[this.tabledispositivos.subnetColumn]));
+                    if (this.IssubnetNull()) {
+                        return null;
                     }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'subnet\' de la tabla \'dispositivos\' es DBNull.", e);
+                    else {
+                        return ((string)(this[this.tabledispositivos.subnetColumn]));
                     }
                 }
                 set {
@@ -1830,9 +1842,14 @@ namespace FixyNet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public System.DateTime fecha {
+            public string fecha {
                 get {
-                    return ((global::System.DateTime)(this[this.tableeventos.fechaColumn]));
+                    try {
+                        return ((string)(this[this.tableeventos.fechaColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'fecha\' de la tabla \'eventos\' es DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tableeventos.fechaColumn] = value;
@@ -1841,10 +1858,10 @@ namespace FixyNet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public byte[] hora {
+            public string hora {
                 get {
                     try {
-                        return ((byte[])(this[this.tableeventos.horaColumn]));
+                        return ((string)(this[this.tableeventos.horaColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("El valor de la columna \'hora\' de la tabla \'eventos\' es DBNull.", e);
@@ -1870,15 +1887,31 @@ namespace FixyNet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public string observacion {
                 get {
-                    try {
-                        return ((string)(this[this.tableeventos.observacionColumn]));
+                    if (this.IsobservacionNull()) {
+                        return null;
                     }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'observacion\' de la tabla \'eventos\' es DBNull.", e);
+                    else {
+                        return ((string)(this[this.tableeventos.observacionColumn]));
                     }
                 }
                 set {
                     this[this.tableeventos.observacionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int tiempo_respuesta {
+                get {
+                    try {
+                        return ((int)(this[this.tableeventos.tiempo_respuestaColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'tiempo_respuesta\' de la tabla \'eventos\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableeventos.tiempo_respuestaColumn] = value;
                 }
             }
             
@@ -1891,6 +1924,18 @@ namespace FixyNet {
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["dispositivos_eventos"]);
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsfechaNull() {
+                return this.IsNull(this.tableeventos.fechaColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetfechaNull() {
+                this[this.tableeventos.fechaColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1915,6 +1960,18 @@ namespace FixyNet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetobservacionNull() {
                 this[this.tableeventos.observacionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool Istiempo_respuestaNull() {
+                return this.IsNull(this.tableeventos.tiempo_respuestaColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void Settiempo_respuestaNull() {
+                this[this.tableeventos.tiempo_respuestaColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2692,12 +2749,17 @@ SELECT uuid_dispositivo, ip, subnet, mac, marca, modelo, descripcion, monitor, h
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT uuid_dispositivo, ip, subnet, mac, marca, modelo, descripcion, monitor, ho" +
                 "stname FROM dispositivos";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "SELECT        uuid_dispositivo, ip, monitor\r\nFROM            dispositivos\r\nWHERE " +
+                "       (monitor = 1)";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2719,6 +2781,30 @@ SELECT uuid_dispositivo, ip, subnet, mac, marca, modelo, descripcion, monitor, h
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual fixynetDataSet.dispositivosDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            fixynetDataSet.dispositivosDataTable dataTable = new fixynetDataSet.dispositivosDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int monitorActivo(fixynetDataSet.dispositivosDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual fixynetDataSet.dispositivosDataTable GetIpMonAct() {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
             fixynetDataSet.dispositivosDataTable dataTable = new fixynetDataSet.dispositivosDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -3231,36 +3317,58 @@ SELECT uuid_dispositivo, ip, subnet, mac, marca, modelo, descripcion, monitor, h
             tableMapping.ColumnMappings.Add("hora", "hora");
             tableMapping.ColumnMappings.Add("estado", "estado");
             tableMapping.ColumnMappings.Add("observacion", "observacion");
+            tableMapping.ColumnMappings.Add("tiempo_respuesta", "tiempo_respuesta");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[eventos] WHERE (([uuid_evento] = @Original_uuid_evento) AND ([" +
-                "hora] = @Original_hora))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [eventos] WHERE (([uuid_evento] = @Original_uuid_evento) AND ([uuid_dispositivo] = @Original_uuid_dispositivo) AND ((@IsNull_fecha = 1 AND [fecha] IS NULL) OR ([fecha] = @Original_fecha)) AND ((@IsNull_hora = 1 AND [hora] IS NULL) OR ([hora] = @Original_hora)) AND ([estado] = @Original_estado) AND ((@IsNull_observacion = 1 AND [observacion] IS NULL) OR ([observacion] = @Original_observacion)) AND ((@IsNull_tiempo_respuesta = 1 AND [tiempo_respuesta] IS NULL) OR ([tiempo_respuesta] = @Original_tiempo_respuesta)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_uuid_evento", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "uuid_evento", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_hora", global::System.Data.SqlDbType.Timestamp, 0, global::System.Data.ParameterDirection.Input, 0, 0, "hora", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_uuid_evento", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "uuid_evento", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_uuid_dispositivo", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "uuid_dispositivo", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_fecha", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "fecha", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_fecha", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "fecha", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_hora", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "hora", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_hora", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "hora", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_estado", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "estado", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_observacion", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "observacion", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_observacion", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "observacion", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_tiempo_respuesta", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "tiempo_respuesta", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_tiempo_respuesta", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "tiempo_respuesta", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[eventos] ([uuid_evento], [uuid_dispositivo], [fecha], [estado], [observacion]) VALUES (@uuid_evento, @uuid_dispositivo, @fecha, @estado, @observacion);
-SELECT uuid_evento, uuid_dispositivo, fecha, hora, estado, observacion FROM eventos WHERE (uuid_evento = @uuid_evento)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [eventos] ([uuid_evento], [uuid_dispositivo], [fecha], [hora], [estado], [observacion], [tiempo_respuesta]) VALUES (@uuid_evento, @uuid_dispositivo, @fecha, @hora, @estado, @observacion, @tiempo_respuesta);
+SELECT uuid_evento, uuid_dispositivo, fecha, hora, estado, observacion, tiempo_respuesta FROM eventos WHERE (uuid_evento = @uuid_evento)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@uuid_evento", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "uuid_evento", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@uuid_dispositivo", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "uuid_dispositivo", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@fecha", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "fecha", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@uuid_evento", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "uuid_evento", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@uuid_dispositivo", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "uuid_dispositivo", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@fecha", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "fecha", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@hora", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "hora", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@estado", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "estado", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@observacion", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "observacion", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@tiempo_respuesta", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "tiempo_respuesta", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[eventos] SET [uuid_evento] = @uuid_evento, [uuid_dispositivo] = @uuid_dispositivo, [fecha] = @fecha, [estado] = @estado, [observacion] = @observacion WHERE (([uuid_evento] = @Original_uuid_evento) AND ([hora] = @Original_hora));
-SELECT uuid_evento, uuid_dispositivo, fecha, hora, estado, observacion FROM eventos WHERE (uuid_evento = @uuid_evento)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [eventos] SET [uuid_evento] = @uuid_evento, [uuid_dispositivo] = @uuid_dispositivo, [fecha] = @fecha, [hora] = @hora, [estado] = @estado, [observacion] = @observacion, [tiempo_respuesta] = @tiempo_respuesta WHERE (([uuid_evento] = @Original_uuid_evento) AND ([uuid_dispositivo] = @Original_uuid_dispositivo) AND ((@IsNull_fecha = 1 AND [fecha] IS NULL) OR ([fecha] = @Original_fecha)) AND ((@IsNull_hora = 1 AND [hora] IS NULL) OR ([hora] = @Original_hora)) AND ([estado] = @Original_estado) AND ((@IsNull_observacion = 1 AND [observacion] IS NULL) OR ([observacion] = @Original_observacion)) AND ((@IsNull_tiempo_respuesta = 1 AND [tiempo_respuesta] IS NULL) OR ([tiempo_respuesta] = @Original_tiempo_respuesta)));
+SELECT uuid_evento, uuid_dispositivo, fecha, hora, estado, observacion, tiempo_respuesta FROM eventos WHERE (uuid_evento = @uuid_evento)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@uuid_evento", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "uuid_evento", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@uuid_dispositivo", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "uuid_dispositivo", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@fecha", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "fecha", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@uuid_evento", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "uuid_evento", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@uuid_dispositivo", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "uuid_dispositivo", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@fecha", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "fecha", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@hora", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "hora", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@estado", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "estado", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@observacion", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "observacion", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_uuid_evento", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "uuid_evento", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_hora", global::System.Data.SqlDbType.Timestamp, 0, global::System.Data.ParameterDirection.Input, 0, 0, "hora", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@tiempo_respuesta", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "tiempo_respuesta", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_uuid_evento", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "uuid_evento", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_uuid_dispositivo", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "uuid_dispositivo", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_fecha", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "fecha", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_fecha", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "fecha", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_hora", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "hora", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_hora", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "hora", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_estado", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "estado", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_observacion", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "observacion", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_observacion", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "observacion", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_tiempo_respuesta", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "tiempo_respuesta", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_tiempo_respuesta", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "tiempo_respuesta", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3273,12 +3381,22 @@ SELECT uuid_evento, uuid_dispositivo, fecha, hora, estado, observacion FROM even
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[3];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT uuid_evento, uuid_dispositivo, fecha, hora, estado, observacion FROM dbo.e" +
-                "ventos";
+            this._commandCollection[0].CommandText = "SELECT uuid_evento, uuid_dispositivo, fecha, hora, estado, observacion, tiempo_re" +
+                "spuesta FROM eventos";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "dbo.ErrorEventDisp";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.StoredProcedure;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[2].Connection = this.Connection;
+            this._commandCollection[2].CommandText = "dbo.EventosErrorDispo";
+            this._commandCollection[2].CommandType = global::System.Data.CommandType.StoredProcedure;
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3300,6 +3418,54 @@ SELECT uuid_evento, uuid_dispositivo, fecha, hora, estado, observacion FROM even
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual fixynetDataSet.eventosDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            fixynetDataSet.eventosDataTable dataTable = new fixynetDataSet.eventosDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int ErrorDispEvent(fixynetDataSet.eventosDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual fixynetDataSet.eventosDataTable GetErrorDispEvent() {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            fixynetDataSet.eventosDataTable dataTable = new fixynetDataSet.eventosDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillBy(fixynetDataSet.eventosDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual fixynetDataSet.eventosDataTable EventsErrorDisp() {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
             fixynetDataSet.eventosDataTable dataTable = new fixynetDataSet.eventosDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -3338,18 +3504,56 @@ SELECT uuid_evento, uuid_dispositivo, fecha, hora, estado, observacion FROM even
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(string Original_uuid_evento, byte[] Original_hora) {
+        public virtual int Delete(string Original_uuid_evento, string Original_uuid_dispositivo, string Original_fecha, string Original_hora, string Original_estado, string Original_observacion, global::System.Nullable<int> Original_tiempo_respuesta) {
             if ((Original_uuid_evento == null)) {
                 throw new global::System.ArgumentNullException("Original_uuid_evento");
             }
             else {
                 this.Adapter.DeleteCommand.Parameters[0].Value = ((string)(Original_uuid_evento));
             }
-            if ((Original_hora == null)) {
-                throw new global::System.ArgumentNullException("Original_hora");
+            if ((Original_uuid_dispositivo == null)) {
+                throw new global::System.ArgumentNullException("Original_uuid_dispositivo");
             }
             else {
-                this.Adapter.DeleteCommand.Parameters[1].Value = ((byte[])(Original_hora));
+                this.Adapter.DeleteCommand.Parameters[1].Value = ((string)(Original_uuid_dispositivo));
+            }
+            if ((Original_fecha == null)) {
+                this.Adapter.DeleteCommand.Parameters[2].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[2].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((string)(Original_fecha));
+            }
+            if ((Original_hora == null)) {
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[5].Value = ((string)(Original_hora));
+            }
+            if ((Original_estado == null)) {
+                throw new global::System.ArgumentNullException("Original_estado");
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[6].Value = ((string)(Original_estado));
+            }
+            if ((Original_observacion == null)) {
+                this.Adapter.DeleteCommand.Parameters[7].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[8].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[7].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[8].Value = ((string)(Original_observacion));
+            }
+            if ((Original_tiempo_respuesta.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[10].Value = ((int)(Original_tiempo_respuesta.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[10].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -3371,7 +3575,7 @@ SELECT uuid_evento, uuid_dispositivo, fecha, hora, estado, observacion FROM even
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string uuid_evento, string uuid_dispositivo, System.DateTime fecha, string estado, string observacion) {
+        public virtual int Insert(string uuid_evento, string uuid_dispositivo, string fecha, string hora, string estado, string observacion, global::System.Nullable<int> tiempo_respuesta) {
             if ((uuid_evento == null)) {
                 throw new global::System.ArgumentNullException("uuid_evento");
             }
@@ -3384,18 +3588,35 @@ SELECT uuid_evento, uuid_dispositivo, fecha, hora, estado, observacion FROM even
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = ((string)(uuid_dispositivo));
             }
-            this.Adapter.InsertCommand.Parameters[2].Value = ((System.DateTime)(fecha));
+            if ((fecha == null)) {
+                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(fecha));
+            }
+            if ((hora == null)) {
+                this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(hora));
+            }
             if ((estado == null)) {
                 throw new global::System.ArgumentNullException("estado");
             }
             else {
-                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(estado));
+                this.Adapter.InsertCommand.Parameters[4].Value = ((string)(estado));
             }
             if ((observacion == null)) {
-                this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
+                this.Adapter.InsertCommand.Parameters[5].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[4].Value = ((string)(observacion));
+                this.Adapter.InsertCommand.Parameters[5].Value = ((string)(observacion));
+            }
+            if ((tiempo_respuesta.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[6].Value = ((int)(tiempo_respuesta.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -3417,7 +3638,7 @@ SELECT uuid_evento, uuid_dispositivo, fecha, hora, estado, observacion FROM even
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string uuid_evento, string uuid_dispositivo, System.DateTime fecha, string estado, string observacion, string Original_uuid_evento, byte[] Original_hora) {
+        public virtual int Update(string uuid_evento, string uuid_dispositivo, string fecha, string hora, string estado, string observacion, global::System.Nullable<int> tiempo_respuesta, string Original_uuid_evento, string Original_uuid_dispositivo, string Original_fecha, string Original_hora, string Original_estado, string Original_observacion, global::System.Nullable<int> Original_tiempo_respuesta) {
             if ((uuid_evento == null)) {
                 throw new global::System.ArgumentNullException("uuid_evento");
             }
@@ -3430,30 +3651,85 @@ SELECT uuid_evento, uuid_dispositivo, fecha, hora, estado, observacion FROM even
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(uuid_dispositivo));
             }
-            this.Adapter.UpdateCommand.Parameters[2].Value = ((System.DateTime)(fecha));
+            if ((fecha == null)) {
+                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(fecha));
+            }
+            if ((hora == null)) {
+                this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(hora));
+            }
             if ((estado == null)) {
                 throw new global::System.ArgumentNullException("estado");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(estado));
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(estado));
             }
             if ((observacion == null)) {
-                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(observacion));
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(observacion));
+            }
+            if ((tiempo_respuesta.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(tiempo_respuesta.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
             if ((Original_uuid_evento == null)) {
                 throw new global::System.ArgumentNullException("Original_uuid_evento");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(Original_uuid_evento));
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_uuid_evento));
             }
-            if ((Original_hora == null)) {
-                throw new global::System.ArgumentNullException("Original_hora");
+            if ((Original_uuid_dispositivo == null)) {
+                throw new global::System.ArgumentNullException("Original_uuid_dispositivo");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((byte[])(Original_hora));
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(Original_uuid_dispositivo));
+            }
+            if ((Original_fecha == null)) {
+                this.Adapter.UpdateCommand.Parameters[9].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[10].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[9].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[10].Value = ((string)(Original_fecha));
+            }
+            if ((Original_hora == null)) {
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[12].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[12].Value = ((string)(Original_hora));
+            }
+            if ((Original_estado == null)) {
+                throw new global::System.ArgumentNullException("Original_estado");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[13].Value = ((string)(Original_estado));
+            }
+            if ((Original_observacion == null)) {
+                this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[15].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[15].Value = ((string)(Original_observacion));
+            }
+            if ((Original_tiempo_respuesta.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[17].Value = ((int)(Original_tiempo_respuesta.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[17].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -3475,8 +3751,8 @@ SELECT uuid_evento, uuid_dispositivo, fecha, hora, estado, observacion FROM even
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string uuid_dispositivo, System.DateTime fecha, string estado, string observacion, string Original_uuid_evento, byte[] Original_hora) {
-            return this.Update(Original_uuid_evento, uuid_dispositivo, fecha, estado, observacion, Original_uuid_evento, Original_hora);
+        public virtual int Update(string uuid_dispositivo, string fecha, string hora, string estado, string observacion, global::System.Nullable<int> tiempo_respuesta, string Original_uuid_evento, string Original_uuid_dispositivo, string Original_fecha, string Original_hora, string Original_estado, string Original_observacion, global::System.Nullable<int> Original_tiempo_respuesta) {
+            return this.Update(Original_uuid_evento, uuid_dispositivo, fecha, hora, estado, observacion, tiempo_respuesta, Original_uuid_evento, Original_uuid_dispositivo, Original_fecha, Original_hora, Original_estado, Original_observacion, Original_tiempo_respuesta);
         }
     }
     
